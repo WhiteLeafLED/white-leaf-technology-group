@@ -17,12 +17,27 @@ h3{font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:14px}
 /* nav */
 .nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .3s,box-shadow .3s}
 .nav.solid{background:rgba(7,9,13,.82);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(255,255,255,.08)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;color:#fff}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:88px;color:#fff}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;font-size:1.1rem;letter-spacing:-.02em}
 .brand em{font-style:normal;font-weight:500;opacity:.7}
-.logo{display:block;height:64px;width:auto;border-radius:4px;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
-.brand.sm .logo{height:56px}
-@media (min-width:901px){.logo{height:72px}.brand.sm .logo{height:56px}}
+.nav-in{height:88px}
+.logo{display:block;height:68px;width:auto;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.14)}
+.brand.sm .logo{height:48px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+@media (min-width:901px){.logo{height:76px}}
+.hero-logo{display:block;width:min(220px,42vw);height:auto;border-radius:18px;margin:0 0 28px;box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.16)}
+.hero-copy{max-width:720px}
+.hero-copy .eyebrow{margin-top:8px;margin-bottom:20px}
+@media (min-width:901px){
+ .hero-in{display:grid;grid-template-columns:240px 1fr;gap:48px;align-items:end;padding-bottom:12vh}
+ .hero-logo{width:220px;margin:0 0 8px}
+ .hero-copy .eyebrow{margin-top:0}
+}
+@media (max-width:900px){
+ .nav-in{height:76px}
+ .logo{height:58px}
+ nav{inset:76px 0 auto}
+ .hero-logo{width:min(168px,46vw);margin-bottom:22px}
+}
 .leaf{width:22px;height:22px;border-radius:0 60% 0 60%;background:linear-gradient(135deg,var(--red),var(--blue))}
 nav a{text-decoration:none;font-weight:600;font-size:.95rem;opacity:.85;margin-left:28px}nav a:hover{opacity:1}
 .nav-cta{padding:9px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.35)}
@@ -32,7 +47,7 @@ nav a{text-decoration:none;font-weight:600;font-size:.95rem;opacity:.85;margin-l
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;color:#fff;overflow:hidden;background:#000 url(media/flyby.jpg) center/cover}
 .hero-video{position:absolute;inset:0;width:100%;height:100%!important;object-fit:cover;animation:zoom 24s ease-in-out infinite alternate}@keyframes zoom{to{transform:scale(1.08)}}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,.1) 35%,rgba(5,7,10,.88) 100%),linear-gradient(90deg,rgba(0,0,0,.55),transparent 65%)}
-.hero-in{position:relative;padding:0 0 13vh}
+.hero-in{position:relative;padding:110px 0 13vh;width:min(var(--w),100% - 40px);margin-inline:auto}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);margin-bottom:24px}
 .dot{width:8px;height:8px;border-radius:50%}.dot.r{background:var(--red);box-shadow:0 0 12px var(--red)}.dot.b{background:var(--blue);box-shadow:0 0 12px var(--blue);margin-right:4px}
 .hero h1{font-size:clamp(3rem,9vw,7.5rem);margin-bottom:22px}
@@ -110,7 +125,7 @@ footer{background:#000;color:#fff;padding:32px 0;font-size:.85rem}
  .split,.duo{grid-template-columns:1fr}.split.rev .txt{order:0}
  .grid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr}
  .menu-btn{display:block}
- nav{position:fixed;inset:72px 0 auto;background:rgba(7,9,13,.96);backdrop-filter:blur(14px);display:flex;flex-direction:column;padding:12px 20px 24px;transform:translateY(-130%);transition:transform .35s}
+ nav{position:fixed;inset:76px 0 auto;background:rgba(7,9,13,.96);backdrop-filter:blur(14px);display:flex;flex-direction:column;padding:12px 20px 24px;transform:translateY(-130%);transition:transform .35s}
  nav.open{transform:none}nav a{margin:0;padding:14px 0;font-size:1.1rem;border-bottom:1px solid rgba(255,255,255,.08)}
  .nav-cta{border:0;border-radius:0}
  .brand em{display:none}
