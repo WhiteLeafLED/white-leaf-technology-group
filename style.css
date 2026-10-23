@@ -20,8 +20,9 @@ h3{font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:14px}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;color:#fff}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;font-size:1.1rem;letter-spacing:-.02em}
 .brand em{font-style:normal;font-weight:500;opacity:.7}
-.logo{display:block;height:52px;width:auto;border-radius:8px}
-.brand.sm .logo{height:40px}
+.logo{display:block;height:64px;width:auto;border-radius:4px;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+.brand.sm .logo{height:56px}
+@media (min-width:901px){.logo{height:72px}.brand.sm .logo{height:56px}}
 .leaf{width:22px;height:22px;border-radius:0 60% 0 60%;background:linear-gradient(135deg,var(--red),var(--blue))}
 nav a{text-decoration:none;font-weight:600;font-size:.95rem;opacity:.85;margin-left:28px}nav a:hover{opacity:1}
 .nav-cta{padding:9px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.35)}
