@@ -141,3 +141,18 @@ footer{background:#000;color:#fff;padding:32px 0;font-size:.85rem}
 @media (max-width:520px){.grid{grid-template-columns:1fr}.tile{aspect-ratio:4/3}.hero-in{padding-bottom:16vh}.nav-eyebrow{display:none}.nav-in{height:88px}.logo{height:72px!important;width:auto!important}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}.hero-video{display:none}}
 .vids{display:grid;grid-template-columns:1fr 1fr;gap:24px}@media(max-width:900px){.vids{grid-template-columns:1fr}}
+
+/* section panels: hidden on home; shown one-at-a-time via nav */
+body.home-mode .nav-panel{display:none!important}
+body.panel-mode #top,
+body.panel-mode .home-end{display:none!important}
+body.panel-mode .nav-panel{display:none!important}
+body.panel-mode .nav-panel.is-active{display:block!important}
+body.panel-mode .nav-panel.is-active + .nav-panel.is-active{display:block!important}
+/* when Technology is active, also show In the barn (follows it) */
+body.panel-mode.view-technology #in-the-barn{display:block!important}
+body.panel-mode .nav.solid,
+body.home-mode .nav.solid{background:rgba(7,9,13,.82)}
+#site-nav a.is-active{opacity:1;color:#fff}
+#site-nav a.is-active:not(.nav-cta){box-shadow:inset 0 -2px 0 #e11d48}
+
