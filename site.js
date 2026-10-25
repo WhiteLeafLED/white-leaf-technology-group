@@ -3,7 +3,8 @@ const nav=document.getElementById('nav');
 const btn=document.querySelector('.menu-btn');
 const menu=document.getElementById('site-nav');
 const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const PANEL_IDS=new Set(['about','technology','applications','results','case-studies','contact']);
+const PANEL_IDS=new Set(['about','technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light','applications','results','case-studies','contact']);
+const TECH_IDS=new Set(['technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light']);
 const HOME_IDS=new Set(['top','home-cta','']);
 
 const setNavSolid=()=>{
@@ -17,9 +18,16 @@ btn.addEventListener('click',()=>{
   btn.setAttribute('aria-expanded',o);
   btn.setAttribute('aria-label',o?'Close menu':'Open menu');
 });
-menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+menu.querySelectorAll('a:not(.dd-top)').forEach(a=>a.addEventListener('click',()=>{
   menu.classList.remove('open');
   btn.setAttribute('aria-expanded','false');
+  menu.querySelectorAll('.dd.open').forEach(d=>d.classList.remove('open'));
+}));
+// mobile: first tap on a dropdown parent expands it, second tap follows the link
+menu.querySelectorAll('.dd-top').forEach(t=>t.addEventListener('click',e=>{
+  const d=t.parentElement;
+  if(matchMedia('(max-width:900px)').matches && !d.classList.contains('open')){e.preventDefault();d.classList.add('open');return}
+  menu.classList.remove('open');btn.setAttribute('aria-expanded','false');d.classList.remove('open');
 }));
 
 const hv=document.querySelector('.hero-video');
@@ -52,16 +60,9 @@ const showPanel=(id)=>{
     el.classList.add('is-active');
     el.querySelectorAll('.reveal').forEach(r=>r.classList.add('in'));
   }
-  // Technology also reveals In the barn
-  if(id==='technology'){
-    const barn=document.getElementById('in-the-barn');
-    if(barn){
-      barn.classList.add('is-active');
-      barn.querySelectorAll('.reveal').forEach(r=>r.classList.add('in'));
-    }
-  }
   const link=menu.querySelector(`a[href="#${id}"]`);
   if(link) link.classList.add('is-active');
+  if(TECH_IDS.has(id)){const t=menu.querySelector('.dd-top[href="#technology"]');if(t)t.classList.add('is-active');}
   setNavSolid();
   scrollTo({top:0,behavior:'auto'});
 };
@@ -74,12 +75,6 @@ const applyHash=()=>{
   }
   if(PANEL_IDS.has(id)){
     showPanel(id);
-    return;
-  }
-  // in-the-barn has no nav item; treat as technology
-  if(id==='in-the-barn'){
-    history.replaceState(null,'','#technology');
-    showPanel('technology');
     return;
   }
   showHome(false);
