@@ -3,8 +3,8 @@ const nav=document.getElementById('nav');
 const btn=document.querySelector('.menu-btn');
 const menu=document.getElementById('site-nav');
 const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const PANEL_IDS=new Set(['about','technology','applications','results','case-studies']);
-const HOME_IDS=new Set(['top','contact','']);
+const PANEL_IDS=new Set(['about','technology','applications','results','case-studies','contact']);
+const HOME_IDS=new Set(['top','home-cta','']);
 
 const setNavSolid=()=>{
   const solid = document.body.classList.contains('panel-mode') || scrollY>40;
@@ -32,20 +32,15 @@ const clearActivePanels=()=>{
     .split(/\s+/).filter(c=>c && !c.startsWith('view-') && c!=='home-mode' && c!=='panel-mode').join(' ');
 };
 
-const showHome=(scrollToContact)=>{
+const showHome=(scrollToCta)=>{
   clearActivePanels();
   document.body.classList.add('home-mode');
   setNavSolid();
-  if(scrollToContact){
-    const c=document.getElementById('contact');
+  if(scrollToCta){
+    const c=document.getElementById('home-cta');
     if(c) c.scrollIntoView({behavior: rm?'auto':'smooth'});
   } else {
     scrollTo({top:0,behavior: rm?'auto':'smooth'});
-  }
-  // mark Contact when scrolled there via nav
-  if(scrollToContact){
-    const link=menu.querySelector('a[href="#contact"]');
-    if(link) link.classList.add('is-active');
   }
 };
 
@@ -73,7 +68,7 @@ const showPanel=(id)=>{
 
 const applyHash=()=>{
   const id=(location.hash||'#top').slice(1);
-  if(id==='contact'){
+  if(id==='home-cta'){
     showHome(true);
     return;
   }
