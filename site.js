@@ -3,8 +3,9 @@ const nav=document.getElementById('nav');
 const btn=document.querySelector('.menu-btn');
 const menu=document.getElementById('site-nav');
 const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const PANEL_IDS=new Set(['about','technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light','applications','results','case-studies','contact']);
+const PANEL_IDS=new Set(['about','technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light','applications','app-milking-holsteins','app-nursery','app-heifer-huts','app-water-troughs','app-unseen-enemy','case-studies','contact']);
 const TECH_IDS=new Set(['technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light']);
+const APP_IDS=new Set(['applications','app-milking-holsteins','app-nursery','app-heifer-huts','app-water-troughs','app-unseen-enemy']);
 const HOME_IDS=new Set(['top','home-cta','']);
 
 const setNavSolid=()=>{
@@ -63,6 +64,7 @@ const showPanel=(id)=>{
   const link=menu.querySelector(`a[href="#${id}"]`);
   if(link) link.classList.add('is-active');
   if(TECH_IDS.has(id)){const t=menu.querySelector('.dd-top[href="#technology"]');if(t)t.classList.add('is-active');}
+  if(APP_IDS.has(id)){const a=menu.querySelector('.dd-top[href="#applications"]');if(a)a.classList.add('is-active');}
   setNavSolid();
   scrollTo({top:0,behavior:'auto'});
 };

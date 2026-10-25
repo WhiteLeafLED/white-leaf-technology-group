@@ -84,7 +84,7 @@ figcaption{font-size:.78rem;color:var(--mut);padding-top:10px}
 .wide{margin-top:24px;position:relative}.wide video{width:100%;border-radius:var(--r);aspect-ratio:16/9;object-fit:cover;background:#000}
 .dark figcaption{color:#8a94a2}
 /* apps */
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
 .tile{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:3/4}
 .tile img{width:100%;height:100%!important;object-fit:cover;transition:transform 1s}
 .tile:hover img{transform:scale(1.06)}
@@ -152,7 +152,7 @@ body.panel-mode .nav-panel.is-active + .nav-panel.is-active{display:block!import
 body.panel-mode .nav.solid,
 body.home-mode .nav.solid{background:rgba(7,9,13,.82)}
 #site-nav a.is-active{opacity:1;color:#fff}
-#site-nav a.is-active:not(.nav-cta){box-shadow:inset 0 -2px 0 #e11d48}
+#site-nav a.is-active:not(.nav-cta){box-shadow:none}
 
 /* contact card + form */
 .contact-card{max-width:720px;margin:0 auto}
@@ -204,3 +204,19 @@ html{scroll-padding-top:150px}
  .dd.open .dd-menu{display:block}
  #site-nav .dd-menu a{padding:10px 0!important;font-size:1rem}
 }
+
+.tile-link{display:block;color:inherit;text-decoration:none}
+.tile video{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1s}
+.tile:hover video{transform:scale(1.06)}
+
+.media.tall img{aspect-ratio:3/4;object-fit:cover}
+
+/* Unseen Enemy / long-form lists */
+.plain-list{list-style:none;margin:0;padding:0}
+.plain-list li{padding-left:1.15rem;position:relative;margin-bottom:14px;line-height:1.55;color:inherit}
+.plain-list li::before{content:"";position:absolute;left:0;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--accent,#c45c4a)}
+.plain-list.numbered{counter-reset:plain}
+.plain-list.numbered li{padding-left:1.6rem}
+.plain-list.numbered li::before{content:counter(plain);counter-increment:plain;width:auto;height:auto;border-radius:0;background:none;top:0;font-weight:700;font-size:.85em;color:var(--accent,#c45c4a)}
+.dark .plain-list li::before{background:#7aa8ff}
+.dark .plain-list.numbered li::before{background:none;color:#7aa8ff}
