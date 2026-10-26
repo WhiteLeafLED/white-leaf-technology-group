@@ -6,7 +6,6 @@ const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const PANEL_IDS=new Set(['about','technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light','applications','app-milking-holsteins','app-nursery','app-heifer-huts','app-water-troughs','app-unseen-enemy','case-studies','contact']);
 const TECH_IDS=new Set(['technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light']);
 const APP_IDS=new Set(['applications','app-milking-holsteins','app-nursery','app-heifer-huts','app-water-troughs','app-unseen-enemy']);
-const HOME_IDS=new Set(['top','home-cta','']);
 
 const setNavSolid=()=>{
   const solid = document.body.classList.contains('panel-mode') || scrollY>40;
@@ -24,7 +23,6 @@ menu.querySelectorAll('a:not(.dd-top)').forEach(a=>a.addEventListener('click',()
   btn.setAttribute('aria-expanded','false');
   menu.querySelectorAll('.dd.open').forEach(d=>d.classList.remove('open'));
 }));
-// mobile: first tap on a dropdown parent expands it, second tap follows the link
 menu.querySelectorAll('.dd-top').forEach(t=>t.addEventListener('click',e=>{
   const d=t.parentElement;
   if(matchMedia('(max-width:900px)').matches && !d.classList.contains('open')){e.preventDefault();d.classList.add('open');return}
@@ -33,6 +31,19 @@ menu.querySelectorAll('.dd-top').forEach(t=>t.addEventListener('click',e=>{
 
 const hv=document.querySelector('.hero-video');
 if(rm&&hv){hv.pause();hv.removeAttribute('autoplay')}
+
+const tryPlay=v=>{
+  if(rm) return;
+  v.muted=true;
+  const kick=()=>{
+    const p=v.play();
+    if(p&&typeof p.catch==='function') p.catch(()=>{});
+  };
+  if(v.readyState>=2){kick();return}
+  const onReady=()=>{v.removeEventListener('canplay',onReady);kick()};
+  v.addEventListener('canplay',onReady);
+  try{v.load()}catch(_){}
+};
 
 const pauseHiddenVideos=()=>{
   document.querySelectorAll('.nav-panel video').forEach(v=>{
@@ -46,14 +57,10 @@ const playActiveVideos=()=>{
   const panel=document.querySelector('.nav-panel.is-active');
   if(!panel) return;
   panel.querySelectorAll('video').forEach(v=>{
-    // Restart short non-loop clips so they actually play when the panel opens
     try{
-      if(v.ended || v.paused){
-        if(!v.loop) v.currentTime=0;
-        const p=v.play();
-        if(p&&typeof p.catch==='function') p.catch(()=>{});
-      }
+      if(!v.loop && (v.ended || v.currentTime>0.2)) v.currentTime=0;
     }catch(_){}
+    tryPlay(v);
   });
 };
 
@@ -91,9 +98,7 @@ const showPanel=(id)=>{
   if(APP_IDS.has(id)){const a=menu.querySelector('.dd-top[href="#applications"]');if(a)a.classList.add('is-active');}
   setNavSolid();
   scrollTo({top:0,behavior:'auto'});
-  // Videos inside display:none panels never autoplay; start them once visible
   pauseHiddenVideos();
-  // next frame so display:block has applied
   requestAnimationFrame(()=>requestAnimationFrame(playActiveVideos));
 };
 
