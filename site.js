@@ -34,6 +34,29 @@ menu.querySelectorAll('.dd-top').forEach(t=>t.addEventListener('click',e=>{
 const hv=document.querySelector('.hero-video');
 if(rm&&hv){hv.pause();hv.removeAttribute('autoplay')}
 
+const pauseHiddenVideos=()=>{
+  document.querySelectorAll('.nav-panel video').forEach(v=>{
+    if(!v.closest('.nav-panel.is-active')){
+      try{v.pause()}catch(_){}
+    }
+  });
+};
+
+const playActiveVideos=()=>{
+  const panel=document.querySelector('.nav-panel.is-active');
+  if(!panel) return;
+  panel.querySelectorAll('video').forEach(v=>{
+    // Restart short non-loop clips so they actually play when the panel opens
+    try{
+      if(v.ended || v.paused){
+        if(!v.loop) v.currentTime=0;
+        const p=v.play();
+        if(p&&typeof p.catch==='function') p.catch(()=>{});
+      }
+    }catch(_){}
+  });
+};
+
 const clearActivePanels=()=>{
   document.querySelectorAll('.nav-panel.is-active').forEach(el=>el.classList.remove('is-active'));
   menu.querySelectorAll('a.is-active').forEach(a=>a.classList.remove('is-active'));
@@ -44,6 +67,7 @@ const clearActivePanels=()=>{
 const showHome=(scrollToCta)=>{
   clearActivePanels();
   document.body.classList.add('home-mode');
+  pauseHiddenVideos();
   setNavSolid();
   if(scrollToCta){
     const c=document.getElementById('home-cta');
@@ -67,6 +91,10 @@ const showPanel=(id)=>{
   if(APP_IDS.has(id)){const a=menu.querySelector('.dd-top[href="#applications"]');if(a)a.classList.add('is-active');}
   setNavSolid();
   scrollTo({top:0,behavior:'auto'});
+  // Videos inside display:none panels never autoplay; start them once visible
+  pauseHiddenVideos();
+  // next frame so display:block has applied
+  requestAnimationFrame(()=>requestAnimationFrame(playActiveVideos));
 };
 
 const applyHash=()=>{
