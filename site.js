@@ -33,8 +33,9 @@ const hv=document.querySelector('.hero-video');
 if(rm&&hv){hv.pause();hv.removeAttribute('autoplay')}
 
 const tryPlay=v=>{
-  if(rm) return;
-  v.muted=true;
+  const snd=v.hasAttribute('data-play-sound');
+  if(rm&&!snd) return;
+  if(snd){v.muted=false;v.controls=true}else v.muted=true;
   const kick=()=>{
     const p=v.play();
     if(p&&typeof p.catch==='function') p.catch(()=>{});
