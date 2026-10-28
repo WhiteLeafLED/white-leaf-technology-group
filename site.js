@@ -3,9 +3,9 @@ const nav=document.getElementById('nav');
 const btn=document.querySelector('.menu-btn');
 const menu=document.getElementById('site-nav');
 const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const PANEL_IDS=new Set(['about','technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light','applications','app-milking-holsteins','app-nursery','app-heifer-huts','app-water-troughs','app-unseen-enemy','case-studies','contact']);
+const PANEL_IDS=new Set(['about','technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light','applications','app-milking-holsteins','app-nursery','app-heifer-huts','app-water-troughs','app-unseen-enemy','app-how-we-kill-unseen-enemy','case-studies','contact']);
 const TECH_IDS=new Set(['technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light']);
-const APP_IDS=new Set(['applications','app-milking-holsteins','app-nursery','app-heifer-huts','app-water-troughs','app-unseen-enemy']);
+const APP_IDS=new Set(['applications','app-milking-holsteins','app-nursery','app-heifer-huts','app-water-troughs','app-unseen-enemy','app-how-we-kill-unseen-enemy']);
 
 const setNavSolid=()=>{
   const solid = document.body.classList.contains('panel-mode') || scrollY>40;
