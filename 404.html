@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Page not found — White Leaf Technology Group</title>
+<script>
+(function () {
+  var marker = "/white-leaf-technology-group/";
+  var path = location.pathname;
+  var i = path.indexOf(marker);
+  var base = document.createElement("base");
+  base.href = i >= 0 ? path.slice(0, i + marker.length) : "/";
+  document.head.appendChild(base);
+})();
+</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#ff3b4f;--blue:#3b82ff;--dark:#07090d}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--dark);color:#eef1f5;font-family:Manrope,system-ui,-apple-system,Segoe UI,sans-serif;font-size:17px;line-height:1.6;padding:32px 20px;text-align:center}
+  main{width:min(560px,100%)}
+  img{display:block;height:96px;width:auto;max-width:70vw;margin:0 auto 28px}
+  .kicker{font-size:.875rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#7aa8ff;margin-bottom:14px}
+  h1{font-size:clamp(2rem,8vw,3.2rem);letter-spacing:-.03em;line-height:1.05;font-weight:800;margin-bottom:16px}
+  p{color:#9aa4b2;font-size:1.05rem;margin-bottom:28px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:15px 26px;border-radius:999px;background:linear-gradient(100deg,var(--red),var(--blue));color:#fff;font-weight:700;font-size:1rem;text-decoration:none}
+</style>
+</head>
+<body>
+<main>
+  <a href="index.html"><img src="img/logo.png" alt="White Leaf Technology Group logo" width="852" height="584"></a>
+  <p class="kicker">White Leaf Technology Group</p>
+  <h1>Page not found</h1>
+  <p>That address is not on this site.</p>
+  <a class="btn" href="index.html">Back to the homepage</a>
+</main>
+</body>
+</html>

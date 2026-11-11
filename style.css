@@ -46,6 +46,7 @@ nav a{text-decoration:none;font-weight:600;font-size:.88rem;opacity:.85;margin-l
 .hero h1{font-size:clamp(3rem,9vw,7.5rem);margin-bottom:22px}
 .grad{background:linear-gradient(90deg,#ff6b7a,#7aa8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lead{font-size:clamp(1.1rem,2vw,1.35rem);max-width:560px;opacity:.9;margin-bottom:32px}
+.hero h1.lead{font-size:clamp(1.1rem,2vw,1.35rem);max-width:560px;opacity:.9;margin:0 0 32px;font-weight:400;letter-spacing:normal;line-height:1.6}
 .ctas{display:flex;gap:12px;flex-wrap:wrap}
 .tag{margin-top:28px;font-size:.75rem;opacity:.55}
 .scroll-cue{position:absolute;left:50%;bottom:28px;width:26px;height:42px;border:2px solid rgba(255,255,255,.5);border-radius:14px;transform:translateX(-50%)}
@@ -221,3 +222,53 @@ html{scroll-padding-top:150px}
 .plain-list.numbered li::before{content:counter(plain);counter-increment:plain;width:auto;height:auto;border-radius:0;background:none;top:0;font-weight:700;font-size:.85em;color:var(--accent,#c45c4a)}
 .dark .plain-list li::before{background:#7aa8ff}
 .dark .plain-list.numbered li::before{background:none;color:#7aa8ff}
+
+/* Phones and tablets. Desktop (901px and up) is unchanged. */
+@media (max-width:900px){
+  .nav-in{min-width:0}
+  .brand-block,.brand{min-width:0;flex:1 1 auto}
+  .logo{flex-shrink:1;min-width:0;width:auto!important;max-width:100%!important;height:auto!important;max-height:96px!important;object-fit:contain}
+  .menu-btn{width:44px;height:44px;flex:0 0 44px}
+  .nav:has(#site-nav.open){background:rgba(7,9,13,.96)}
+  #site-nav{
+    top:110px;bottom:0;left:0;right:0;width:auto;max-width:100%;
+    overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;
+    white-space:normal;flex-wrap:nowrap!important;
+    -webkit-overflow-scrolling:touch;
+  }
+  #site-nav a{white-space:normal;min-height:44px;display:flex;align-items:center;line-height:1.3}
+  #site-nav .dd-menu a{white-space:normal;min-height:44px;height:auto;padding-top:12px!important;padding-bottom:12px!important}
+  .btn,.tech-sub a,.contact-lines a,.contact-form .btn{min-height:44px;white-space:normal}
+  .tech-sub a{display:inline-flex;align-items:center}
+  .contact-lines a{display:inline-flex;align-items:center}
+  .contact-form input,.contact-form textarea{font-size:16px;min-height:44px}
+  .small{font-size:1rem}
+  .wrap,.split,.duo,.pair,.grid,.vids,.contact-page,.txt,.media,.tile,.tile-link{min-width:0}
+  .split,.duo{grid-template-columns:minmax(0,1fr)}
+  .grid,.pair{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .media img,.pair .media img,.tile img,.tile video{max-width:100%}
+  .nav,.nav.solid{background:rgba(7,9,13,.96);backdrop-filter:none;-webkit-backdrop-filter:none}
+  #site-nav{visibility:hidden}
+  #site-nav.open{visibility:visible}
+  .hero{min-height:0;height:auto;background:#fff;padding-top:110px}
+  .hero-video{position:relative;top:auto;right:auto;bottom:auto;left:auto;width:100%;max-width:100%;height:auto!important;object-fit:contain;animation:none}
+  .hero-shade{display:none}
+  .hero-in{position:relative;left:auto;right:auto;bottom:auto;transform:none;width:100%;max-width:none;margin:0;padding:22px 20px 8px;background:#fff;color:var(--ink)}
+  .hero .btn.ghost{color:var(--ink);background:#fff;border:1px solid rgba(11,15,20,.28);box-shadow:none}
+  .hero .tag{opacity:.75;font-size:.875rem}
+  .scroll-cue{position:relative;left:auto;bottom:auto;transform:none;display:block;width:44px;height:44px;margin:8px auto 28px;border-color:rgba(11,15,20,.45)}
+  .scroll-cue::after{background:var(--ink)}
+  body.panel-mode .nav-panel.is-active{padding-top:128px}
+}
+@media (max-width:520px){
+  .logo{max-height:72px!important}
+  #site-nav{top:88px}
+  .hero{padding-top:88px}
+  .grid,.pair{grid-template-columns:minmax(0,1fr)}
+  body.panel-mode .nav-panel.is-active{padding-top:108px}
+}
+@media (max-width:900px) and (prefers-reduced-motion:reduce){
+  .hero{min-height:0;height:auto;background:#fff;padding-top:0}
+  .hero::before{content:"";display:block;width:100%;aspect-ratio:16/9;background:#07090d url(media/flyby.jpg) center/contain no-repeat}
+  .hero-video{display:none!important}
+}
