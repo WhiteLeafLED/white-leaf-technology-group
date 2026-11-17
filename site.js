@@ -1,52 +1,18 @@
 (()=>{
 const nav=document.getElementById('nav');
-const btn=document.querySelector('.menu-btn');
 const menu=document.getElementById('site-nav');
 const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const PANEL_IDS=new Set(['about','technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light','applications','app-milking-holsteins','app-nursery','app-heifer-huts','app-water-troughs','app-bacteria-impact-milking-cow','app-how-we-kill-unseen-enemy','app-unseen-enemy','case-studies','contact']);
 const TECH_IDS=new Set(['technology','tech-wavelengths','tech-led','tech-emerging','tech-used-today','red-light','blue-light']);
 const APP_IDS=new Set(['applications','app-milking-holsteins','app-nursery','app-heifer-huts','app-water-troughs','app-bacteria-impact-milking-cow','app-how-we-kill-unseen-enemy','app-unseen-enemy']);
+const SITE_TITLE=document.title;
+let firstView=true;
 
 const setNavSolid=()=>{
   const solid = document.body.classList.contains('panel-mode') || scrollY>40;
   nav.classList.toggle('solid', solid);
 };
 addEventListener('scroll',setNavSolid,{passive:true});
-
-const closeDropdowns=()=>{
-  menu.querySelectorAll('.dd.open').forEach(d=>d.classList.remove('open'));
-  menu.querySelectorAll('.dd-top').forEach(t=>t.setAttribute('aria-expanded','false'));
-};
-const closeMenu=()=>{
-  menu.classList.remove('open');
-  btn.setAttribute('aria-expanded','false');
-  btn.setAttribute('aria-label','Open menu');
-  closeDropdowns();
-};
-btn.addEventListener('click',()=>{
-  const o=menu.classList.toggle('open');
-  btn.setAttribute('aria-expanded',String(o));
-  btn.setAttribute('aria-label',o?'Close menu':'Open menu');
-  if(!o) closeDropdowns();
-});
-menu.querySelectorAll('a:not(.dd-top)').forEach(a=>a.addEventListener('click',()=>{
-  closeMenu();
-}));
-menu.querySelectorAll('.dd-top').forEach(t=>{
-  t.setAttribute('aria-expanded','false');
-  t.addEventListener('click',e=>{
-    const d=t.parentElement;
-    const narrow=matchMedia('(max-width:900px)').matches;
-    if(narrow && !d.classList.contains('open')){
-      e.preventDefault();
-      closeDropdowns();
-      d.classList.add('open');
-      t.setAttribute('aria-expanded','true');
-      return;
-    }
-    closeMenu();
-  });
-});
 
 const hv=document.querySelector('.hero-video');
 if(rm&&hv){hv.pause();hv.removeAttribute('autoplay')}
@@ -58,6 +24,17 @@ const tryPlay=v=>{
   const p=v.play();
   if(p&&typeof p.catch==='function') p.catch(()=>{});
 };
+
+/* Panel videos start with preload="none" so nothing downloads until its panel is opened. */
+const warm=v=>{ if(v.preload==='none') v.preload='metadata'; };
+
+/* Looping preview tiles (Applications grid) only download and play while on screen. */
+const tileVideos=[...document.querySelectorAll('.tile video')];
+const tileIO='IntersectionObserver' in window ? new IntersectionObserver(es=>es.forEach(e=>{
+  const v=e.target;
+  if(e.isIntersecting){ tryPlay(v); } else { try{v.pause()}catch(_){} }
+}),{rootMargin:'120px 0px'}) : null;
+if(tileIO) tileVideos.forEach(v=>tileIO.observe(v));
 
 const pauseHiddenVideos=()=>{
   document.querySelectorAll('.nav-panel video').forEach(v=>{
@@ -71,6 +48,8 @@ const playActiveVideos=()=>{
   const panel=document.querySelector('.nav-panel.is-active');
   if(!panel) return;
   panel.querySelectorAll('video').forEach(v=>{
+    if(v.closest('.tile')){ if(!tileIO) tryPlay(v); return; }   /* tiles are driven by the observer */
+    warm(v);
     try{
       if(!v.loop && (v.ended || v.currentTime>0.2)) v.currentTime=0;
     }catch(_){}
@@ -88,6 +67,7 @@ const clearActivePanels=()=>{
 const showHome=(scrollToCta)=>{
   clearActivePanels();
   document.body.classList.add('home-mode');
+  document.title=SITE_TITLE;
   pauseHiddenVideos();
   setNavSolid();
   if(scrollToCta){
@@ -115,19 +95,24 @@ const showPanel=(id)=>{
   pauseHiddenVideos();
   playActiveVideos();
   requestAnimationFrame(()=>requestAnimationFrame(playActiveVideos));
+  /* Tell screen readers and the browser tab that the "page" changed. */
+  const h=el&&el.querySelector('h2,h1');
+  if(h){
+    document.title=h.textContent.replace(/\s+/g,' ').trim()+' — White Leaf Technology Group';
+    if(!firstView){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); }
+  }
 };
 
 const applyHash=()=>{
   const id=(location.hash||'#top').slice(1);
   if(id==='home-cta'){
     showHome(true);
-    return;
-  }
-  if(PANEL_IDS.has(id)){
+  } else if(PANEL_IDS.has(id)){
     showPanel(id);
-    return;
+  } else {
+    showHome(false);
   }
-  showHome(false);
+  firstView=false;
 };
 
 addEventListener('hashchange',applyHash);
@@ -162,6 +147,8 @@ if(!('IntersectionObserver' in window)||rm){
   if (!form) return;
   var status = document.getElementById('contact-status');
   var btn = form.querySelector('button[type="submit"]');
+  var widget = form.querySelector('.cf-turnstile');
+  var widgetId = null;
   var MSG = {
     captcha_required: 'Please wait for the security check to finish, then try again.',
     captcha_failed: 'The security check did not pass. Please try again.',
@@ -169,10 +156,62 @@ if(!('IntersectionObserver' in window)||rm){
     missing_fields: 'Please fill in your name, a valid email, and a message.',
     delivery_failed: 'We could not send your message right now. Please call Dave at 262-707-7288.'
   };
-  function show(text, ok) { status.hidden = false; status.textContent = text; status.style.color = ok ? '#7ee2a8' : '#ff8a96'; }
+  var FIELD_MSG = {
+    name: 'Please enter your name.',
+    email: 'Please enter a valid email address, like name@example.com.',
+    message: 'Please type a message.'
+  };
+
+  /* Cloudflare Turnstile ("are you human" check) is loaded only when the form is about to be used. */
+  var tsRequested = false;
+  function loadTurnstile() {
+    if (tsRequested || !widget) return;
+    tsRequested = true;
+    window.wlTurnstileReady = function () {
+      try { widgetId = window.turnstile.render(widget); } catch (_) {}
+    };
+    var s = document.createElement('script');
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=wlTurnstileReady';
+    s.async = true; s.defer = true;
+    document.head.appendChild(s);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es, obs) {
+      if (es.some(function (e) { return e.isIntersecting; })) { loadTurnstile(); obs.disconnect(); }
+    }, { rootMargin: '400px 0px' }).observe(form);
+  } else { loadTurnstile(); }
+  form.addEventListener('focusin', loadTurnstile, { once: true });
+  form.addEventListener('pointerdown', loadTurnstile, { once: true });
+
+  function show(text, ok) {
+    status.hidden = false; status.textContent = text;
+    status.classList.toggle('ok', !!ok); status.classList.toggle('err', !ok);
+  }
+  function fieldErr(input) { return document.getElementById('err-' + input.name); }
+  function clearField(input) {
+    input.removeAttribute('aria-invalid');
+    var er = fieldErr(input); if (er) { er.hidden = true; er.textContent = ''; }
+  }
+  function markInvalid(input) {
+    input.setAttribute('aria-invalid', 'true');
+    var er = fieldErr(input);
+    if (er) { er.textContent = FIELD_MSG[input.name] || input.validationMessage; er.hidden = false; }
+  }
+  form.addEventListener('input', function (e) {
+    if (e.target.hasAttribute && e.target.hasAttribute('aria-invalid') && e.target.checkValidity()) clearField(e.target);
+  });
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
+    var fields = form.querySelectorAll('input[name="name"], input[name="email"], textarea[name="message"]');
+    var bad = [];
+    fields.forEach(function (f) { clearField(f); if (!f.checkValidity()) bad.push(f); });
+    if (bad.length) {
+      bad.forEach(markInvalid);
+      show('Please check the highlighted field' + (bad.length > 1 ? 's' : '') + ' and try again.', false);
+      bad[0].focus();
+      return;
+    }
     btn.disabled = true; show('Sending…', true);
     fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok, d: d }; }); })
@@ -181,6 +220,9 @@ if(!('IntersectionObserver' in window)||rm){
         else { show(MSG[res.d.error] || 'Something went wrong. Please try again or call Dave at 262-707-7288.', false); }
       })
       .catch(function () { show('Network problem. Please try again or call Dave at 262-707-7288.', false); })
-      .then(function () { btn.disabled = false; if (window.turnstile) { try { window.turnstile.reset(); } catch (_) {} } });
+      .then(function () {
+        btn.disabled = false;
+        if (window.turnstile) { try { widgetId !== null ? window.turnstile.reset(widgetId) : window.turnstile.reset(); } catch (_) {} }
+      });
   });
 })();

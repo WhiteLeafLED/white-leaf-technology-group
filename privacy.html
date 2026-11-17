@@ -12,16 +12,14 @@
 <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
 <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261117hp">
+<link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css?v=20261117m">
 </head>
 <body class="legal">
 <a class="skip" href="#main">Skip to content</a>
 <header class="nav solid" id="nav"><div class="wrap nav-in">
 <div class="brand-block">
-<a href="index.html#top" class="brand" aria-label="White Leaf Technology Group"><img class="logo" src="img/logo.png" alt="White Leaf Technology Group logo" width="852" height="584" fetchpriority="high"></a>
+<a href="index.html#top" class="brand" aria-label="White Leaf Technology Group"><img class="logo" src="img/logo-432.webp" srcset="img/logo-216.webp 216w, img/logo-432.webp 432w" sizes="(max-width:520px) 105px, 216px" alt="White Leaf Technology Group logo" width="852" height="584" fetchpriority="high"></a>
 <p class="nav-eyebrow"><span class="dot r"></span><span class="dot b"></span>Emerging breakthrough technology</p>
 </div>
 <button type="button" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
@@ -49,44 +47,8 @@
 </div>
 </section>
 </main>
-<footer><div class="wrap foot"><a href="index.html#top" class="brand sm" aria-label="White Leaf Technology Group"><img class="logo" src="img/logo.png" alt="White Leaf Technology Group logo" width="280" height="192" decoding="async" loading="lazy"></a><span class="muted">Videos are artistic renderings. · <a href="privacy.html">Privacy Policy</a></span></div></footer>
-<script>
-(function () {
-  var btn = document.querySelector('.menu-btn');
-  var menu = document.getElementById('site-nav');
-  if (!btn || !menu) return;
-  var closeDropdowns = function () {
-    menu.querySelectorAll('.dd.open').forEach(function (d) { d.classList.remove('open'); });
-    menu.querySelectorAll('.dd-top').forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
-  };
-  btn.addEventListener('click', function () {
-    var open = menu.classList.toggle('open');
-    btn.setAttribute('aria-expanded', String(open));
-    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    if (!open) closeDropdowns();
-  });
-  menu.querySelectorAll('a:not(.dd-top)').forEach(function (a) {
-    a.addEventListener('click', function () {
-      menu.classList.remove('open');
-      btn.setAttribute('aria-expanded', 'false');
-      btn.setAttribute('aria-label', 'Open menu');
-      closeDropdowns();
-    });
-  });
-  menu.querySelectorAll('.dd-top').forEach(function (t) {
-    t.setAttribute('aria-expanded', 'false');
-    t.addEventListener('click', function (e) {
-      var d = t.parentElement;
-      if (window.matchMedia('(max-width:900px)').matches && !d.classList.contains('open')) {
-        e.preventDefault();
-        closeDropdowns();
-        d.classList.add('open');
-        t.setAttribute('aria-expanded', 'true');
-      }
-    });
-  });
-})();
-</script>
+<footer><div class="wrap foot"><a href="index.html#top" class="brand sm" aria-label="White Leaf Technology Group"><img class="logo" src="img/logo-432.webp" srcset="img/logo-216.webp 216w, img/logo-432.webp 432w" sizes="(max-width:520px) 105px, 216px" alt="White Leaf Technology Group logo" width="280" height="192" decoding="async" loading="lazy"></a><span class="muted">Videos are artistic renderings. · <a href="privacy.html">Privacy Policy</a></span></div></footer>
+<script src="nav.js?v=20261117m" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "bc44002e8fd24649bb0716f6893d6892"}'></script>
 </body>
 </html>
