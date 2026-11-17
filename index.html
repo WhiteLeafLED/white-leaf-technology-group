@@ -24,10 +24,12 @@
 <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://challenges.cloudflare.com">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/logo.png" fetchpriority="high">
 <link rel="preload" as="image" href="media/flyby.jpg">
-<link rel="stylesheet" href="style.css?v=20261111mobile1">
+<link rel="stylesheet" href="style.css?v=20261117contact">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -42,7 +44,6 @@
       "url": "https://www.whiteleafled.net/",
       "description": "White Leaf Technology Group identifies emerging technologies that can be applied in the dairy industry. The first product technology being released is LED technology consisting of germicidal and therapy lighting. The blue light is continuous low-level violet-blue light in a selected band of the visible spectrum.",
       "telephone": "+1-262-707-7288",
-      "email": "dave@whiteleafled.net",
       "areaServed": {
         "@type": "Country",
         "name": "United States"
@@ -63,8 +64,7 @@
         "@type": "Person",
         "@id": "https://www.whiteleafled.net/#dave-klumb",
         "name": "Dave Klumb",
-        "telephone": "+1-262-707-7288",
-        "email": "dave@whiteleafled.net"
+        "telephone": "+1-262-707-7288"
       }
     },
     {
@@ -737,7 +737,7 @@
 <ul class="contact-lines">
 <li class="name">Dave Klumb</li>
 <li><a href="tel:+12627077288">M 262-707-7288</a></li>
-<li><a href="mailto:dave@whiteleafled.net">dave@whiteleafled.net</a></li>
+<li><a href="#contact">Send a message</a></li>
 </ul>
 <a class="btn" href="#contact">Contact us</a>
 </div>
@@ -754,26 +754,26 @@
 <ul class="contact-lines">
 <li class="name">Dave Klumb</li>
 <li><a href="tel:+12627077288">M 262-707-7288</a></li>
-<li><a href="mailto:dave@whiteleafled.net">dave@whiteleafled.net</a></li>
+<li><a href="#contact">Send a message</a></li>
 </ul>
 <p class="muted small">Prefer email or a call — or send a note with the form and we’ll get back to you.</p>
 </div>
-<form class="contact-form reveal" action="https://formsubmit.co/dave@whiteleafled.net" method="POST">
+<form class="contact-form reveal" id="contact-form" action="https://forms.whiteleafled.net/api/contact" method="POST" novalidate>
 <input type="hidden" name="_subject" value="White Leaf website inquiry">
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_template" value="table">
-<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-<label>Name<input type="text" name="name" required autocomplete="name"></label>
-<label>Farm / company<input type="text" name="farm" autocomplete="organization"></label>
-<label>Email<input type="email" name="email" required autocomplete="email"></label>
-<label>Phone<input type="tel" name="phone" autocomplete="tel"></label>
-<label>Message<textarea name="message" rows="5" required placeholder="How can we help?"></textarea></label>
+<input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+<label>Name<input type="text" name="name" required maxlength="200" autocomplete="name"></label>
+<label>Farm / company<input type="text" name="farm" maxlength="200" autocomplete="organization"></label>
+<label>Email<input type="email" name="email" required maxlength="254" autocomplete="email"></label>
+<label>Phone<input type="tel" name="phone" maxlength="50" autocomplete="tel"></label>
+<label>Message<textarea name="message" rows="5" required maxlength="5000" placeholder="How can we help?"></textarea></label>
+<div class="cf-turnstile" data-sitekey="0x4AAAAAAGEYwg58lcZJyZxY" data-action="contact" data-theme="dark"></div>
 <button class="btn" type="submit">Send message</button>
-<p class="muted small">Messages go to dave@whiteleafled.net. The first time you use this form, FormSubmit may email you a one-time confirmation link.</p>
+<p class="form-status small" id="contact-status" role="status" aria-live="polite" hidden></p>
+<p class="muted small">Protected by Cloudflare Turnstile. Your message goes straight to Dave Klumb at White Leaf.</p>
 </form>
 </div>
 </section>
 </main>
 <footer><div class="wrap foot"><a href="#top" class="brand sm" aria-label="White Leaf Technology Group"><img class="logo" src="img/logo.png" alt="White Leaf Technology Group logo" width="280" height="192" decoding="async" loading="lazy"></a><span class="muted">Videos are artistic renderings.</span></div></footer>
-<script src="site.js?v=20261111mobile1" defer></script>
+<script src="site.js?v=20261117contact" defer></script>
 </body></html>
