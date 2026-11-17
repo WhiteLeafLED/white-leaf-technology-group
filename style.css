@@ -170,7 +170,7 @@ body.home-mode .nav.solid{background:rgba(7,9,13,.82)}
 .contact-lines a:hover{color:#fff;border-bottom-color:#fff}
 .contact-page{display:grid;gap:40px;align-items:start}
 @media (min-width:900px){.contact-page{grid-template-columns:1fr 1.1fr;gap:56px}}
-.contact-form{display:grid;gap:14px;padding:28px;border-radius:var(--r);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.contact-form{display:grid;gap:14px;padding:28px;border-radius:var(--r);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);position:relative}
 .contact-form label{display:grid;gap:6px;font-size:.85rem;font-weight:600;color:#c5ced9;text-align:left}
 .contact-form input,.contact-form textarea{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.35);color:#fff;font:inherit}
 .contact-form input:focus,.contact-form textarea:focus{outline:2px solid var(--blue);outline-offset:1px}
