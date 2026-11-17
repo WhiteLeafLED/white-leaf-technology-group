@@ -311,3 +311,24 @@ picture{display:contents}
  body:not(.home-mode):not(.panel-mode) .nav-panel:not(:target){display:none}
  body:not(.home-mode):not(.panel-mode):has(.nav-panel:target) :is(#top,.home-end){display:none}
 }
+
+/* --- compact header on desktop for inner views (About, Technology, Applications/Results, video panels, Case Studies) ---
+   Home and Contact keep the tall header; phones/tablets (<=900px) are unchanged. site.js already puts
+   body.panel-mode and body.view-<id> on <body>, so this is CSS only. */
+@media (min-width:901px){
+ body.panel-mode:not(.view-contact){--hdr:66px;--hdr-logo:54px;--hdr-logo-w:112px}
+ body.panel-mode:not(.view-contact) .nav-in{height:var(--hdr);transition:height .25s ease}
+ body.panel-mode:not(.view-contact) .brand-block{flex-direction:row;align-items:center;gap:16px}
+ body.panel-mode:not(.view-contact) .logo{height:var(--hdr-logo)!important;max-width:var(--hdr-logo-w)!important;filter:drop-shadow(0 3px 8px rgba(0,0,0,.45));transition:height .25s ease}
+ body.panel-mode:not(.view-contact) .nav-eyebrow{font-size:.72rem;padding:5px 11px;box-shadow:none}
+ body.panel-mode:not(.view-contact) .nav-panel.is-active{padding-top:calc(var(--hdr) + 40px)}
+ html:has(body.panel-mode:not(.view-contact)){scroll-padding-top:calc(66px + 16px)}
+}
+@media (min-width:1280px){
+ body.panel-mode:not(.view-contact){--hdr:84px;--hdr-logo:72px;--hdr-logo-w:148px}
+ html:has(body.panel-mode:not(.view-contact)){scroll-padding-top:calc(84px + 16px)}
+}
+@media (min-width:1500px){
+ body.panel-mode:not(.view-contact){--hdr:100px;--hdr-logo:84px;--hdr-logo-w:172px}
+ html:has(body.panel-mode:not(.view-contact)){scroll-padding-top:calc(100px + 16px)}
+}
