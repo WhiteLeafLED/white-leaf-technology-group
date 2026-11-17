@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy policy | White Leaf Technology Group</title>
+<meta name="description" content="How White Leaf Technology Group handles contact form messages on this site.">
+<link rel="canonical" href="https://www.whiteleafled.net/privacy.html">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#07090d">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=20261117privacy">
+</head>
+<body class="legal">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav solid" id="nav"><div class="wrap nav-in">
+<div class="brand-block">
+<a href="index.html#top" class="brand" aria-label="White Leaf Technology Group"><img class="logo" src="img/logo.png" alt="White Leaf Technology Group logo" width="852" height="584" fetchpriority="high"></a>
+<p class="nav-eyebrow"><span class="dot r"></span><span class="dot b"></span>Emerging breakthrough technology</p>
+</div>
+<button type="button" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
+<nav id="site-nav" aria-label="Primary"><a href="index.html#about">About</a><div class="dd"><a href="index.html#technology" class="dd-top" aria-haspopup="true" aria-expanded="false">Technology<span class="caret" aria-hidden="true"></span></a><div class="dd-menu"><a href="index.html#technology">How it works</a><a href="index.html#tech-wavelengths">Wavelengths</a><a href="index.html#tech-led">What is an LED</a><a href="index.html#tech-emerging">Emerging technology</a><a href="index.html#tech-used-today">Used today</a><a href="index.html#red-light">Red light</a><a href="index.html#blue-light">Blue light</a></div></div><div class="dd"><a href="index.html#applications" class="dd-top" aria-haspopup="true" aria-expanded="false">Applications/Results<span class="caret" aria-hidden="true"></span></a><div class="dd-menu"><a href="index.html#app-milking-holsteins">Milking Holsteins</a><a href="index.html#app-nursery">Calving pen</a><a href="index.html#app-heifer-huts">Heifer Huts</a><a href="index.html#app-water-troughs">Water Troughs</a><a href="index.html#app-how-we-kill-unseen-enemy">How we kill the Unseen Enemy</a><a href="index.html#app-bacteria-impact-milking-cow">How Heavy Loads of Bacteria Impact a Milking Cow</a><a href="index.html#app-unseen-enemy">Whey Material</a></div></div><a href="index.html#case-studies">Case Studies</a><a href="index.html#contact" class="nav-cta">Contact</a></nav>
+</div></header>
+<main id="main">
+<section>
+<div class="wrap legal-doc">
+<p class="kicker">Privacy</p>
+<h1>Privacy policy</h1>
+<p class="muted">Last updated November 17, 2026</p>
+<h3>What we collect</h3>
+<p>When you use the contact form, we receive the name, farm or company, email, phone number, and message you type in. The form also has a hidden field that people are not asked to fill in. It is only there to filter automated submissions. If you call us, we receive whatever you choose to share. We don’t require an account.</p>
+<h3>How we use it</h3>
+<p>Only to answer your question and follow up about your project. Messages go to Dave Klumb at White Leaf Technology Group.</p>
+<h3>Who else sees it</h3>
+<p>We do not sell, rent, or trade your information. This is a static website hosted on GitHub Pages. GitHub Pages may keep standard server logs, such as IP address and browser type, for security and operations. Contact form messages are checked with Cloudflare Turnstile and emailed to us through a Cloudflare Worker on our own domain. Videos on this site are files we host. They are not played from YouTube or another video service. Pages load the Manrope typeface from Google Fonts.</p>
+<h3>Cookies &amp; analytics</h3>
+<p>This site does not use advertising cookies, and it does not include an analytics service. Our own pages do not set cookies. Google Fonts and Cloudflare Turnstile receive the connection data they need to deliver the typeface and to run the contact-form security check.</p>
+<h3>How long we keep it</h3>
+<p>We keep messages as long as needed to answer you and keep normal business records. Ask us any time to see, correct, or delete what we have about you.</p>
+<h3>Contact</h3>
+<p>Questions or requests: <a href="index.html#contact">our contact form</a> · <a href="tel:+12627077288">262-707-7288</a> · White Leaf Technology Group, Wisconsin, USA.</p>
+<p><a class="btn ghost" href="index.html">Back to home</a></p>
+</div>
+</section>
+</main>
+<footer><div class="wrap foot"><a href="index.html#top" class="brand sm" aria-label="White Leaf Technology Group"><img class="logo" src="img/logo.png" alt="White Leaf Technology Group logo" width="280" height="192" decoding="async" loading="lazy"></a><span class="muted">Videos are artistic renderings. · <a href="privacy.html">Privacy Policy</a></span></div></footer>
+<script>
+(function () {
+  var btn = document.querySelector('.menu-btn');
+  var menu = document.getElementById('site-nav');
+  if (!btn || !menu) return;
+  var closeDropdowns = function () {
+    menu.querySelectorAll('.dd.open').forEach(function (d) { d.classList.remove('open'); });
+    menu.querySelectorAll('.dd-top').forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
+  };
+  btn.addEventListener('click', function () {
+    var open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (!open) closeDropdowns();
+  });
+  menu.querySelectorAll('a:not(.dd-top)').forEach(function (a) {
+    a.addEventListener('click', function () {
+      menu.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Open menu');
+      closeDropdowns();
+    });
+  });
+  menu.querySelectorAll('.dd-top').forEach(function (t) {
+    t.setAttribute('aria-expanded', 'false');
+    t.addEventListener('click', function (e) {
+      var d = t.parentElement;
+      if (window.matchMedia('(max-width:900px)').matches && !d.classList.contains('open')) {
+        e.preventDefault();
+        closeDropdowns();
+        d.classList.add('open');
+        t.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
