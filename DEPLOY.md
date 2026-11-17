@@ -58,9 +58,7 @@ by SHA-256 hash (the menu script in `privacy.html`, the `<base>` script in `404.
 ```
 python3 -c "import re,hashlib,base64,sys;s=open(sys.argv[1]).read();[print(\"'sha256-\"+base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()+\"'\") for a,m in re.findall(r'<script([^>]*)>(.*?)</script>',s,re.S) if 'src=' not in a and 'ld+json' not in a]" privacy.html
 ```
-Cloudflare Web Analytics is **not** allowed by the CSP (the privacy policy says the site has no analytics).
-To turn on visitor stats, update the privacy policy first, then add `https://static.cloudflareinsights.com`
-to `script-src` and `https://cloudflareinsights.com` to `connect-src`.
+Cloudflare Web Analytics (manual beacon, site token bc44002e8fd24649bb0716f6893d6892, in index.html, privacy.html and 404.html) is allowed by the CSP: `https://static.cloudflareinsights.com` in script-src and `https://cloudflareinsights.com` in connect-src. The privacy policy describes it.
 
 ## DNS (do not touch email records)
 Only `www` and the apex are web records; both are Worker custom domains (proxied, managed by Cloudflare).
