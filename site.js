@@ -155,3 +155,32 @@ if(!('IntersectionObserver' in window)||rm){
   document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
 }
 })();
+
+/* White Leaf contact form */
+(function () {
+  var form = document.getElementById('contact-form');
+  if (!form) return;
+  var status = document.getElementById('contact-status');
+  var btn = form.querySelector('button[type="submit"]');
+  var MSG = {
+    captcha_required: 'Please wait for the security check to finish, then try again.',
+    captcha_failed: 'The security check did not pass. Please try again.',
+    rate_limited: 'Too many messages from your connection. Please wait a few minutes or call Dave at 262-707-7288.',
+    missing_fields: 'Please fill in your name, a valid email, and a message.',
+    delivery_failed: 'We could not send your message right now. Please call Dave at 262-707-7288.'
+  };
+  function show(text, ok) { status.hidden = false; status.textContent = text; status.style.color = ok ? '#7ee2a8' : '#ff8a96'; }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    btn.disabled = true; show('Sending…', true);
+    fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok, d: d }; }); })
+      .then(function (res) {
+        if (res.ok) { form.reset(); show('Thank you. Your message was sent and Dave will get back to you soon.', true); }
+        else { show(MSG[res.d.error] || 'Something went wrong. Please try again or call Dave at 262-707-7288.', false); }
+      })
+      .catch(function () { show('Network problem. Please try again or call Dave at 262-707-7288.', false); })
+      .then(function () { btn.disabled = false; if (window.turnstile) { try { window.turnstile.reset(); } catch (_) {} } });
+  });
+})();
