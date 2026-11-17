@@ -306,3 +306,8 @@ picture{display:contents}
 .form-status.ok{color:#7ee2a8}
 .form-status.err{color:#ff8a96}
 .dd.dismissed .dd-menu{opacity:0;visibility:hidden;transform:translateY(-6px)}
+/* Avoid a flash of every page section (and the layout jump when JS tidies up): with JS available, show only the home view until site.js picks the right panel. */
+@media (scripting:enabled){
+ body:not(.home-mode):not(.panel-mode) .nav-panel:not(:target){display:none}
+ body:not(.home-mode):not(.panel-mode):has(.nav-panel:target) :is(#top,.home-end){display:none}
+}
