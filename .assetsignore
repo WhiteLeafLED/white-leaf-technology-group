@@ -1,0 +1,10 @@
+.git
+.nojekyll
+CNAME
+DEPLOY.md
+_headers
+_redirects
+.assetsignore
+deploy
+worker
+.gitignore

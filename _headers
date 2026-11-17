@@ -1,0 +1,13 @@
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com 'sha256-FmDwOfJHJYPGl+n0mQDbSAGlpR9vuI++4reslZZSehs=' 'sha256-eHUFCVqxmkXdSM9KLXHTgni3yAM9BGaWjTLwVNLQVzM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; frame-src https://challenges.cloudflare.com; connect-src 'self' https://forms.whiteleafled.net https://challenges.cloudflare.com; form-action 'self' https://forms.whiteleafled.net; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
+/media/*
+  Cache-Control: public, max-age=86400
+
+/img/*
+  Cache-Control: public, max-age=86400

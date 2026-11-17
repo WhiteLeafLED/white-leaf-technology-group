@@ -1,0 +1,4 @@
+# Cloudflare Workers static-assets redirects
+/contact.html   /#contact   301
+/   /index.html   200
+/privacy   /privacy.html   301
