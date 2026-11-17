@@ -1,7 +1,11 @@
+/* Manrope (SIL Open Font License 1.1, see fonts/OFL.txt) — self-hosted variable font, latin subset */
+@font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:swap;src:url(fonts/manrope-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* Metric-matched fallback so text does not jump when Manrope arrives */
+@font-face{font-family:"Manrope Fallback";src:local("Arial"),local("Helvetica"),local("Liberation Sans");size-adjust:99%;ascent-override:107.7%;descent-override:30.3%;line-gap-override:0%}
 :root{--bg:#fff;--ink:#0b0f14;--mut:#5b6573;--line:#e7eaee;--red:#ff3b4f;--blue:#3b82ff;--dark:#07090d;--r:22px;--w:1200px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:Manrope,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+body{font-family:Manrope,"Manrope Fallback",system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
 img,video{display:block;max-width:100%;height:auto}
 a{color:inherit}
 .wrap{width:min(var(--w),100% - 40px);margin-inline:auto}
@@ -36,7 +40,7 @@ nav a{text-decoration:none;font-weight:600;font-size:.88rem;opacity:.85;margin-l
 .menu-btn{display:none;background:none;border:0;width:40px;height:40px;cursor:pointer}
 .menu-btn span{display:block;height:2px;width:24px;background:#fff;margin:6px auto;transition:.3s}
 /* hero */
-.hero{position:relative;min-height:100svh;color:#fff;overflow:hidden;background:#000 url(media/flyby.jpg) center/cover}
+.hero{position:relative;min-height:100svh;color:#fff;overflow:hidden;background:#000 url(media/flyby.webp) center/cover}
 .hero-video{position:absolute;inset:0;width:100%;height:100%!important;object-fit:cover;animation:zoom 24s ease-in-out infinite alternate}@keyframes zoom{to{transform:scale(1.08)}}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,.1) 35%,rgba(5,7,10,.88) 100%),linear-gradient(90deg,rgba(0,0,0,.55),transparent 65%)}
 .hero-in{position:absolute;left:50%;bottom:0;transform:translateX(-50%);z-index:2;width:min(var(--w),calc(100% - 40px));padding:0 0 11vh;display:flex;flex-direction:column;align-items:flex-start;box-sizing:border-box}
@@ -290,6 +294,20 @@ body.legal .muted{color:#9aa4b2}
 
 @media (max-width:900px) and (prefers-reduced-motion:reduce){
   .hero{min-height:0;height:auto;background:#fff;padding-top:0}
-  .hero::before{content:"";display:block;width:100%;aspect-ratio:16/9;background:#07090d url(media/flyby.jpg) center/contain no-repeat}
+  .hero::before{content:"";display:block;width:100%;aspect-ratio:16/9;background:#07090d url(media/flyby.webp) center/contain no-repeat}
   .hero-video{display:none!important}
+}
+
+/* --- modern-web audit additions --- */
+picture{display:contents}
+[tabindex="-1"]:focus{outline:none}
+.field-err{color:#ff8a96;font-weight:600;font-size:.85rem}
+.contact-form [aria-invalid="true"],.contact-form input:user-invalid,.contact-form textarea:user-invalid{border-color:#ff8a96}
+.form-status.ok{color:#7ee2a8}
+.form-status.err{color:#ff8a96}
+.dd.dismissed .dd-menu{opacity:0;visibility:hidden;transform:translateY(-6px)}
+/* Avoid a flash of every page section (and the layout jump when JS tidies up): with JS available, show only the home view until site.js picks the right panel. */
+@media (scripting:enabled){
+ body:not(.home-mode):not(.panel-mode) .nav-panel:not(:target){display:none}
+ body:not(.home-mode):not(.panel-mode):has(.nav-panel:target) :is(#top,.home-end){display:none}
 }
