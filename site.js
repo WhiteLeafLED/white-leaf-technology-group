@@ -8,6 +8,57 @@ const APP_IDS=new Set(['applications','app-milking-holsteins','app-nursery','app
 const SITE_TITLE=document.title;
 let firstView=true;
 
+/* Which panel opened, and which video actually started. No cookies, storage, or identifiers.
+   Text/plain so the POST is a simple request. Production hosts only; any failure is ignored. */
+const TRACK_URL='https://forms.whiteleafled.net/api/event';
+const trackPlayed=new WeakSet();
+const trackEnded=new WeakSet();
+const trackAllowed=()=>{
+  try{
+    if(navigator.webdriver) return false;
+    const h=location.hostname;
+    return h==='www.whiteleafled.net'||h==='whiteleafled.net';
+  }catch(_){ return false; }
+};
+const trackSend=(t,n)=>{
+  try{
+    if(!trackAllowed()||!n) return;
+    const body=JSON.stringify({t:t,n:n,p:location.pathname});
+    let queued=false;
+    if(typeof navigator.sendBeacon==='function'){
+      try{ queued=!!navigator.sendBeacon(TRACK_URL,body); }catch(_){ queued=false; }
+    }
+    if(!queued && typeof fetch==='function'){
+      fetch(TRACK_URL,{method:'POST',body:body,headers:{'Content-Type':'text/plain'},keepalive:true,credentials:'omit',mode:'cors'}).catch(()=>{});
+    }
+  }catch(_){}
+};
+const videoSlug=v=>{
+  try{
+    let src='';
+    try{ src=v.currentSrc||''; }catch(_){}
+    if(!src){
+      const s=v.querySelector('source[src]');
+      src=v.getAttribute('src')||(s&&s.getAttribute('src'))||'';
+    }
+    const file=String(src).split(/[?#]/)[0].split('/').pop();
+    return file.replace(/\.(mp4|webm|ogv|m4v)$/i,'');
+  }catch(_){ return ''; }
+};
+const trackVideo=(e,kind,seen)=>{
+  try{
+    const v=e.target;
+    if(!v||v.tagName!=='VIDEO'||seen.has(v)) return;
+    const n=videoSlug(v);
+    if(!n) return;
+    seen.add(v);
+    trackSend(kind,n);
+  }catch(_){}
+};
+/* `playing` / `ended` do not bubble. Capture so every video is seen, including the hero. */
+document.addEventListener('playing',e=>trackVideo(e,'video_play',trackPlayed),true);
+document.addEventListener('ended',e=>trackVideo(e,'video_end',trackEnded),true);
+
 const setNavSolid=()=>{
   const solid = document.body.classList.contains('panel-mode') || scrollY>40;
   nav.classList.toggle('solid', solid);
@@ -101,6 +152,7 @@ const showPanel=(id)=>{
     document.title=h.textContent.replace(/\s+/g,' ').trim()+' — White Leaf Technology Group';
     if(!firstView){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); }
   }
+  trackSend('section',id);
 };
 
 const applyHash=()=>{
@@ -139,6 +191,11 @@ if(!('IntersectionObserver' in window)||rm){
   }),{threshold:.15});
   document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
 }
+/* The hero has autoplay and may already be playing before this deferred script runs.
+   Other videos have no autoplay; their `playing` event is still ahead of us. */
+try{
+  if(hv && !hv.paused && !hv.ended) trackVideo({target:hv},'video_play',trackPlayed);
+}catch(_){}
 })();
 
 /* White Leaf contact form */
